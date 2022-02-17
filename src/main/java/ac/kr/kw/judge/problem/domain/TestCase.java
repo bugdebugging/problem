@@ -22,6 +22,10 @@ public class TestCase {
         this.outputHash = outputHash;
     }
 
+    public static TestCase of(String inputFilePath, String outputFilePath, String outputHash) {
+        return new TestCase(inputFilePath, outputFilePath, outputHash);
+    }
+
     public String getInputFilePath() {
         return inputFilePath;
     }
