@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "problems")
@@ -43,6 +44,23 @@ public class Problem {
 
     private int numOfSubmits;
 
+    public void changeInfo(Description description, Limit limit, String name) {
+        this.description = description;
+        this.limit = limit;
+        this.name = name;
+    }
+
+    public void addTestCase(TestCase testCase){
+        testCases.add(testCase);
+        this.checkDuplicateTestCase();
+    }
+    public void deleteTestCase(TestCase testCase){
+        testCases.stream().filter(tc ->tc.equals(testCase))
+                .findFirst().orElseThrow(()->{
+           throw new IllegalArgumentException("해당 test case의 문제가 존재하지 않습니다.");
+        });
+    }
+
     protected Problem() {
     }
 
@@ -51,6 +69,12 @@ public class Problem {
         this.description = description;
         this.limit = limit;
         this.testCases = testCases;
+        this.checkDuplicateTestCase();
+    }
+    private void checkDuplicateTestCase(){
+        if(this.testCases.stream().distinct().collect(Collectors.toList()).size()!=testCases.size()){
+            throw new IllegalArgumentException("중복된 tc를 여러번 올릴 수 없습니다.");
+        }
     }
 
     public Long getId() {
