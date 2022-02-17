@@ -12,18 +12,21 @@ public class TestCase {
     private String outputFilePath;
     @Column
     private String outputHash;
+    @Column
+    private String name;
 
     protected TestCase() {
     }
 
-    private TestCase(String inputFilePath, String outputFilePath, String outputHash) {
+    private TestCase(String inputFilePath, String outputFilePath, String outputHash,String name) {
         this.inputFilePath = inputFilePath;
         this.outputFilePath = outputFilePath;
         this.outputHash = outputHash;
+        this.name=name;
     }
 
-    public static TestCase of(String inputFilePath, String outputFilePath, String outputHash) {
-        return new TestCase(inputFilePath, outputFilePath, outputHash);
+    public static TestCase of(String inputFilePath, String outputFilePath, String outputHash,String name) {
+        return new TestCase(inputFilePath, outputFilePath, outputHash,name);
     }
 
     public String getInputFilePath() {
@@ -38,16 +41,20 @@ public class TestCase {
         return outputHash;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TestCase testCase = (TestCase) o;
-        return Objects.equals(inputFilePath, testCase.inputFilePath) && Objects.equals(outputFilePath, testCase.outputFilePath) && Objects.equals(outputHash, testCase.outputHash);
+        return Objects.equals(inputFilePath, testCase.inputFilePath) && Objects.equals(outputFilePath, testCase.outputFilePath) && Objects.equals(outputHash, testCase.outputHash) && Objects.equals(name, testCase.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inputFilePath, outputFilePath, outputHash);
+        return Objects.hash(inputFilePath, outputFilePath, outputHash, name);
     }
 }
