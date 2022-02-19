@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Embeddable
 public class Description {
     @Column
@@ -17,13 +20,17 @@ public class Description {
     }
 
     private Description(String description, String inputDescription, String outputDescription) {
+        checkArgument(isNotEmpty(description), "문제의 description은 필수입니다.");
+        checkArgument(isNotEmpty(inputDescription), "문제의 inputDescription은 필수입니다.");
+        checkArgument(isNotEmpty(outputDescription), "문제의 outputDescription 필수입니다.");
+
         this.description = description;
         this.inputDescription = inputDescription;
         this.outputDescription = outputDescription;
     }
 
-    public static Description of(String description, String inputDescription, String outputDescription){
-        return new Description(description,inputDescription,outputDescription);
+    public static Description of(String description, String inputDescription, String outputDescription) {
+        return new Description(description, inputDescription, outputDescription);
     }
 
     public String getDescription() {
