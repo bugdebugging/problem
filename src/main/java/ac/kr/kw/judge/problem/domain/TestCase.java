@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Embeddable
 public class TestCase {
     @Column
@@ -18,15 +21,20 @@ public class TestCase {
     protected TestCase() {
     }
 
-    private TestCase(String inputFilePath, String outputFilePath, String outputHash,String name) {
+    private TestCase(String inputFilePath, String outputFilePath, String outputHash, String name) {
+        checkArgument(isNotEmpty(inputFilePath), "TestCase의 inputFilePath은 필수입니다.");
+        checkArgument(isNotEmpty(outputFilePath), "TestCase의 outputFilePath는 필수입니다.");
+        checkArgument(isNotEmpty(outputHash), "TestCase의 outputHash는 필수입니다.");
+        checkArgument(isNotEmpty(name), "TestCase의 name은 필수입니다.");
+
         this.inputFilePath = inputFilePath;
         this.outputFilePath = outputFilePath;
         this.outputHash = outputHash;
-        this.name=name;
+        this.name = name;
     }
 
-    public static TestCase of(String inputFilePath, String outputFilePath, String outputHash,String name) {
-        return new TestCase(inputFilePath, outputFilePath, outputHash,name);
+    public static TestCase of(String inputFilePath, String outputFilePath, String outputHash, String name) {
+        return new TestCase(inputFilePath, outputFilePath, outputHash, name);
     }
 
     public String getInputFilePath() {
