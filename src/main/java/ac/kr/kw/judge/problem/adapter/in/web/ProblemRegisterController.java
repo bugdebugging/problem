@@ -1,9 +1,11 @@
 package ac.kr.kw.judge.problem.adapter.in.web;
 
+import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
 import ac.kr.kw.judge.problem.domain.TestCase;
 import ac.kr.kw.judge.problem.dto.ProblemRegisterRequest;
 import ac.kr.kw.judge.problem.service.ProblemRegisterService;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
+import com.google.common.io.Files;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +54,7 @@ public class ProblemRegisterController {
     }
 
     private List<String> saveFilesToLocal(File rootFile, List<MultipartFile> files) {
+
         return files.stream()
                 .map(file -> {
                     File destination = new File(rootFile, file.getOriginalFilename());
@@ -75,12 +78,9 @@ public class ProblemRegisterController {
                 .map(outputFile -> {
                     try {
                         return Base64.getEncoder().encodeToString(DigestUtils.md5Digest(new FileInputStream(outputFile)));
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException exception) {
-                        exception.printStackTrace();
+                    } catch (IOException e) {
+                        throw new FileHashFailedException(e.getMessage());
                     }
-                    return "";
                 }).collect(Collectors.toList());
     }
 }
