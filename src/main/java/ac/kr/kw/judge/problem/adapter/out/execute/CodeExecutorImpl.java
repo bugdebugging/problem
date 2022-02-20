@@ -11,8 +11,6 @@ import java.io.IOException;
 
 @Component
 public class CodeExecutorImpl implements CodeExecutor {
-    public static final String outputFileName = "output.txt";
-    public static final String errorFileName = "error.txt";
 
     @Override
     public boolean compileCode(File workDir) {
@@ -28,8 +26,8 @@ public class CodeExecutorImpl implements CodeExecutor {
 
     @Override
     public boolean executeCompiledCode(File workDir, File inputFile, Limit limit) {
-        File errorFile = new File(workDir, "error.txt");
-        File outputFile = new File(workDir, "output.txt");
+        File errorFile = new File(workDir, errorFileName);
+        File outputFile = new File(workDir, outputFileName);
 
         String[] commands = {"timeout", Integer.toString(limit.getTime()), "java", "-Djava.security.manager", "-cp", ".", "MyApp"};
         ProcessBuilder executionProcessBuilder = new ProcessBuilder(commands);
