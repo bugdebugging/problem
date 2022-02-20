@@ -1,17 +1,17 @@
 package ac.kr.kw.judge.problem.adapter.out.execute;
 
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
-import ac.kr.kw.judge.problem.domain.Limit;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.CompileErrorException;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.ExecuteErrorException;
+import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
+import ac.kr.kw.judge.problem.domain.Limit;
 import ac.kr.kw.judge.problem.service.port.out.CodeExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Base64;
 
 @Component
 public class CodeExecutorImpl implements CodeExecutor {
@@ -56,7 +56,7 @@ public class CodeExecutorImpl implements CodeExecutor {
         String result = "";
         try {
             fis = new FileInputStream(outputFile);
-            result = DigestUtils.md5Digest(fis).toString();
+            result = Base64.getEncoder().encodeToString(DigestUtils.md5Digest(fis));
         } catch (IOException e) {
             throw new FileHashFailedException(e.getMessage());
         }

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -73,7 +74,7 @@ public class ProblemRegisterController {
         return outputFilePaths.stream()
                 .map(outputFile -> {
                     try {
-                        return DigestUtils.md5Digest(new FileInputStream(outputFile)).toString();
+                        return Base64.getEncoder().encodeToString(DigestUtils.md5Digest(new FileInputStream(outputFile)));
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException exception) {
