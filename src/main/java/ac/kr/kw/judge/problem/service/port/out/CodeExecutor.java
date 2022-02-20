@@ -11,4 +11,6 @@ public interface CodeExecutor {
     boolean compileCode(File workDir);
 
     boolean executeCompiledCode(File workDir, File inputFile, Limit limit);
+
+    String clearWithHash(File workDir);
 }

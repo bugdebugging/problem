@@ -102,9 +102,10 @@ public class CodeExecutorTest {
                 "}";
         fos.write(willFailedAtCompile.getBytes());
         fos.close();
+        codeExecutor.compileCode(testDir);
         assertTrue(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
     }
 
     //시간 초과
-    //macious code run
+    //위험한 code(File,Net) run
 }
