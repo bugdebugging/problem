@@ -25,7 +25,7 @@ public class CodeExecutorTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        sourceCode = new File(testDir, "MyApp.java");
+        sourceCode = new File(testDir, "Main.java");
         sourceCode.createNewFile();
 
         inputFile = new File(inputFile, "input.txt");
@@ -50,7 +50,7 @@ public class CodeExecutorTest {
         FileOutputStream fos = new FileOutputStream(sourceCode);
         String willFailedAtCompile = "import java.util.Scanner;\n" +
                 "\n" +
-                "public class MyApp {\n" +
+                "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        Scanner sc=new Scanner(System.in);\n" +
                 "        int n=sc.nextInt();\n" +
@@ -70,7 +70,7 @@ public class CodeExecutorTest {
         FileOutputStream fos = new FileOutputStream(sourceCode);
         String willFailedAtCompile = "import java.util.Scanner;\n" +
                 "\n" +
-                "public class MyApp {\n" +
+                "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        Scanner sc=new Scanner(System.in);\n" +
                 "        int n=sc.nextInt();\n" +
@@ -92,7 +92,7 @@ public class CodeExecutorTest {
         FileOutputStream fos = new FileOutputStream(sourceCode);
         String willFailedAtCompile = "import java.util.Scanner;\n" +
                 "\n" +
-                "public class MyApp {\n" +
+                "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        Scanner sc=new Scanner(System.in);\n" +
                 "        int n=sc.nextInt();\n" +
@@ -111,7 +111,7 @@ public class CodeExecutorTest {
     @DisplayName("무한루프 코드실행")
     void 무한루프_코드실행()throws IOException{
         FileOutputStream fos=new FileOutputStream(sourceCode);
-        String willFailedAtCompile = "public class MyApp {\n" +
+        String willFailedAtCompile = "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.println(\"start infinite loop\");\n" +
                 "        while(true){\n" +
@@ -133,7 +133,7 @@ public class CodeExecutorTest {
                 "import java.io.FileOutputStream;\n" +
                 "import java.io.IOException;\n" +
                 "\n" +
-                "public class MyApp {\n" +
+                "public class Main {\n" +
                 "    public static void main(String[] args) throws IOException {\n" +
                 "        File file = new File(\"//test2\", \"warning.sh\");\n" +
                 "        file.createNewFile();\n" +

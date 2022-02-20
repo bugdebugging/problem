@@ -18,7 +18,7 @@ public class CodeExecutorImpl implements CodeExecutor {
 
     @Override
     public boolean compileCode(File workDir) {
-        ProcessBuilder compileProcessBuilder = new ProcessBuilder("javac", "MyApp.java");
+        ProcessBuilder compileProcessBuilder = new ProcessBuilder("javac", "Main.java");
         compileProcessBuilder.directory(workDir);
 
         try {
@@ -33,7 +33,7 @@ public class CodeExecutorImpl implements CodeExecutor {
         File errorFile = new File(workDir, errorFileName);
         File outputFile = new File(workDir, outputFileName);
 
-        String[] commands = {"timeout", Integer.toString(limit.getTime()), "java", "-Djava.security.manager", "-cp", ".", "MyApp"};
+        String[] commands = {"timeout", Integer.toString(limit.getTime()), "java", "-Djava.security.manager", "-cp", ".", "Main"};
         ProcessBuilder executionProcessBuilder = new ProcessBuilder(commands);
         executionProcessBuilder.directory(workDir);
         executionProcessBuilder.redirectInput(inputFile);
