@@ -2,7 +2,8 @@ package ac.kr.kw.judge.problem.adapter.in.web;
 
 import ac.kr.kw.judge.problem.dto.GradingResult;
 import ac.kr.kw.judge.problem.dto.Submit;
-import ac.kr.kw.judge.problem.service.SolutionGradingService;
+import ac.kr.kw.judge.problem.service.SolutionGradingServiceImpl;
+import ac.kr.kw.judge.problem.service.port.in.SolutionGradingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
