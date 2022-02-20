@@ -2,17 +2,19 @@ package ac.kr.kw.judge.execute;
 
 import ac.kr.kw.judge.problem.domain.Limit;
 import ac.kr.kw.judge.problem.service.port.out.CodeExecutor;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class CodeExecutorTest {
@@ -106,6 +108,44 @@ public class CodeExecutorTest {
         assertTrue(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
     }
 
-    //시간 초과
-    //위험한 code(File,Net) run
+    @Test
+    @DisplayName("무한루프 코드실행")
+    void 무한루프_코드실행()throws IOException{
+        FileOutputStream fos=new FileOutputStream(sourceCode);
+        String willFailedAtCompile = "public class MyApp {\n" +
+                "    public static void main(String[] args) {\n" +
+                "        System.out.println(\"start infinite loop\");\n" +
+                "        while(true){\n" +
+                "        }\n" +
+                "    }\n" +
+                "}";
+        fos.write(willFailedAtCompile.getBytes());
+        fos.close();
+
+        codeExecutor.compileCode(testDir);
+        assertFalse(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
+    }
+
+    @Test
+    @DisplayName("악성코드 실행")
+    void 악성코드_실행() throws IOException {
+        FileOutputStream fos=new FileOutputStream(sourceCode);
+        String willFailedAtCompile = "import java.io.File;\n" +
+                "import java.io.FileOutputStream;\n" +
+                "import java.io.IOException;\n" +
+                "\n" +
+                "public class MyApp {\n" +
+                "    public static void main(String[] args) throws IOException {\n" +
+                "        File file = new File(\"//test2\", \"warning.sh\");\n" +
+                "        file.createNewFile();\n" +
+                "        FileOutputStream fos = new FileOutputStream(file);\n" +
+                "        fos.write(\"waning code\".getBytes());\n" +
+                "    }\n" +
+                "}";
+        fos.write(willFailedAtCompile.getBytes());
+        fos.close();
+
+        codeExecutor.compileCode(testDir);
+        assertFalse(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
+    }
 }
