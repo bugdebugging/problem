@@ -36,11 +36,12 @@ public class SolutionGradingService {
         }
 
         for (TestCase testCase : problem.getTestCases()) {
-            if(!codeExecutor.executeCompiledCode(rootDir, new File(testCase.getInputFilePath()), problem.getLimit())){
+            int exitValue=codeExecutor.executeCompiledCode(rootDir, new File(testCase.getInputFilePath()), problem.getLimit());
+            if(exitValue==1)
                 return GradingResult.RUNTIME_ERROR;
-            }
-            String hash = codeExecutor.clearWithHash(rootDir);
-            if (!hash.equals(testCase.getOutputHash()))
+            else if(exitValue==124)
+                return GradingResult.TIME_LIMIT;
+            if (!codeExecutor.clearWithHash(rootDir).equals(testCase.getOutputHash()))
                 return GradingResult.FAILED;
         }
         return GradingResult.SUCCESS;

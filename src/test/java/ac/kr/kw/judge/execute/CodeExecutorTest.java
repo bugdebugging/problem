@@ -13,8 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CodeExecutorTest {
@@ -84,7 +83,7 @@ public class CodeExecutorTest {
         fos.write(willFailedAtCompile.getBytes());
         fos.close();
         codeExecutor.compileCode(testDir);
-        assertFalse(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
+        assertEquals(1,codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
     }
 
     @Test
@@ -105,7 +104,7 @@ public class CodeExecutorTest {
         fos.write(willFailedAtCompile.getBytes());
         fos.close();
         codeExecutor.compileCode(testDir);
-        assertTrue(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
+        assertEquals(0,codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 2)));
     }
 
     @Test
@@ -123,7 +122,7 @@ public class CodeExecutorTest {
         fos.close();
 
         codeExecutor.compileCode(testDir);
-        assertFalse(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
+        assertEquals(124,codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
     }
 
     @Test
@@ -146,6 +145,6 @@ public class CodeExecutorTest {
         fos.close();
 
         codeExecutor.compileCode(testDir);
-        assertFalse(codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
+        assertEquals(1,codeExecutor.executeCompiledCode(testDir, inputFile, Limit.of(512, 1)));
     }
 }

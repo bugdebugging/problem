@@ -22,20 +22,20 @@ public class CodeExecutorImpl implements CodeExecutor {
         compileProcessBuilder.directory(workDir);
 
         try {
-            return executeProcess(compileProcessBuilder);
+            return executeProcess(compileProcessBuilder)==0;
         } catch (IOException | InterruptedException exception) {
             throw new CompileErrorException(exception.getMessage());
         }
     }
 
     @Override
-    public boolean executeCompiledCode(File sourceDir, File inputFile, Limit limit) {
-        File errorFile = new File(sourceDir, errorFileName);
-        File outputFile = new File(sourceDir, outputFileName);
+    public int executeCompiledCode(File workDir, File inputFile, Limit limit) {
+        File errorFile = new File(workDir, errorFileName);
+        File outputFile = new File(workDir, outputFileName);
 
         String[] commands = {"timeout", Integer.toString(limit.getTime()), "java", "-Djava.security.manager", "-cp", ".", "MyApp"};
         ProcessBuilder executionProcessBuilder = new ProcessBuilder(commands);
-        executionProcessBuilder.directory(sourceDir);
+        executionProcessBuilder.directory(workDir);
         executionProcessBuilder.redirectInput(inputFile);
         executionProcessBuilder.redirectOutput(outputFile);
         executionProcessBuilder.redirectError(errorFile);
@@ -66,12 +66,10 @@ public class CodeExecutorImpl implements CodeExecutor {
         return result;
     }
 
-    private boolean executeProcess(ProcessBuilder processBuilder) throws IOException, InterruptedException {
+    private int executeProcess(ProcessBuilder processBuilder) throws IOException, InterruptedException {
         Process process = processBuilder.start();
         process.waitFor();
         process.destroy();
-        if (process.exitValue() != 0)
-            return false;
-        return true;
+        return process.exitValue();
     }
 }
