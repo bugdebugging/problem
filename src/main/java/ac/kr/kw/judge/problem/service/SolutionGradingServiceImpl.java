@@ -51,7 +51,7 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
     }
 
     private void makeSourceCodeFile(File workDir, Submit submit) {
-        File sourceCode = new File(workDir, "MyApp.java");
+        File sourceCode = new File(workDir, "Main.java");
         try {
             sourceCode.createNewFile();
         } catch (IOException exception) {
