@@ -38,6 +38,7 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
             return GradingResult.COMPILE_ERROR;
         }
 
+        GradingResult result=GradingResult.SUCCESS;
         for (TestCase testCase : problem.getTestCases()) {
             int exitValue = codeExecutor.executeCompiledCode(rootDir, new File(testCase.getInputFilePath()), problem.getLimit());
             if (exitValue == 1)
@@ -47,7 +48,7 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
             if (!codeExecutor.clearWithHash(rootDir).equals(testCase.getOutputHash()))
                 return GradingResult.FAILED;
         }
-        return GradingResult.SUCCESS;
+        return result;
     }
 
     private void makeSourceCodeFile(File workDir, Submit submit) {

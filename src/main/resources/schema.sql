@@ -10,9 +10,6 @@ create table problems
     memory             integer,
     time               integer,
     name               varchar(255),
-    num_of_failed      integer default 0 not null,
-    num_of_submits     integer default 0 not null,
-    num_of_success     integer default 0 not null,
     created_at         timestamp not null,
     updated_at         timestamp not null,
     primary key (id)

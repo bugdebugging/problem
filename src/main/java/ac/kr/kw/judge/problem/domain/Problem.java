@@ -38,12 +38,6 @@ public class Problem {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    private int numOfSuccess;
-
-    private int numOfFailed;
-
-    private int numOfSubmits;
-
     public void changeInfo(Description description, Limit limit, String name) {
         this.description = description;
         this.limit = limit;
@@ -103,18 +97,6 @@ public class Problem {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public int getNumOfSuccess() {
-        return numOfSuccess;
-    }
-
-    public int getNumOfFailed() {
-        return numOfFailed;
-    }
-
-    public int getNumOfSubmits() {
-        return numOfSubmits;
     }
 
     @Override
