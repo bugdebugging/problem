@@ -6,6 +6,8 @@ import ac.kr.kw.judge.problem.dto.ProblemRegisterRequest;
 import ac.kr.kw.judge.problem.service.ProblemRegisterServiceImpl;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
 import ac.kr.kw.judge.problem.service.port.in.ProblemRegisterService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,11 +22,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Api(tags = {"problems"})
 @RestController
 @RequiredArgsConstructor
 public class ProblemRegisterController {
     private final ProblemRegisterService problemRegisterService;
 
+    @ApiOperation(value = "새로운 문제 등록", notes = "테스트 케이스와 함께 새로운 문제 등록.")
     @PostMapping(value = "/api/problems")
     public Long registerProblem(
             @RequestPart(value = "problem") ProblemRegisterRequest problemRegisterRequest,

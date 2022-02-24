@@ -6,6 +6,9 @@ server:
     context-path: /
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jackson:
     property-naming-strategy: SNAKE_CASE
     serialization:
