@@ -3,7 +3,6 @@ package ac.kr.kw.judge.problem.adapter.in.web;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
 import ac.kr.kw.judge.problem.domain.TestCase;
 import ac.kr.kw.judge.problem.dto.ProblemRegisterRequest;
-import ac.kr.kw.judge.problem.service.ProblemRegisterServiceImpl;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
 import ac.kr.kw.judge.problem.service.port.in.ProblemRegisterService;
 import io.swagger.annotations.Api;
@@ -58,7 +57,6 @@ public class ProblemRegisterController {
     }
 
     private List<String> saveFilesToLocal(File rootFile, List<MultipartFile> files) {
-
         return files.stream()
                 .map(file -> {
                     File destination = new File(rootFile, file.getOriginalFilename());
