@@ -4,6 +4,7 @@ import ac.kr.kw.judge.problem.adapter.out.execute.exception.CompileErrorExceptio
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.ExecuteErrorException;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
 import ac.kr.kw.judge.problem.domain.Limit;
+import ac.kr.kw.judge.problem.domain.ProgrammingLanguage;
 import ac.kr.kw.judge.problem.service.port.out.CodeExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
@@ -17,23 +18,25 @@ import java.util.Base64;
 public class CodeExecutorImpl implements CodeExecutor {
 
     @Override
-    public boolean compileCode(File workDir) {
-        ProcessBuilder compileProcessBuilder = new ProcessBuilder("javac", "Main.java");
+    public boolean compileCode(ProgrammingLanguage programmingLanguage, File workDir) {
+        ProcessBuilder compileProcessBuilder = new ProcessBuilder(programmingLanguage.getCompileOrder());
         compileProcessBuilder.directory(workDir);
 
         try {
-            return executeProcess(compileProcessBuilder)==0;
+            return executeProcess(compileProcessBuilder) == 0;
         } catch (IOException | InterruptedException exception) {
             throw new CompileErrorException(exception.getMessage());
         }
     }
 
     @Override
-    public int executeCompiledCode(File workDir, File inputFile, Limit limit) {
+    public int executeCompiledCode(ProgrammingLanguage programmingLanguage, File workDir, File inputFile, Limit limit) {
         File errorFile = new File(workDir, errorFileName);
         File outputFile = new File(workDir, outputFileName);
 
-        String[] commands = {"timeout", Integer.toString(limit.getTime()), "java", "-Djava.security.manager", "-cp", ".", "Main"};
+        String[] commands=programmingLanguage.getExecuteOrder();
+        commands[1]=Integer.toString(limit.getTime());
+
         ProcessBuilder executionProcessBuilder = new ProcessBuilder(commands);
         executionProcessBuilder.directory(workDir);
         executionProcessBuilder.redirectInput(inputFile);
@@ -52,18 +55,14 @@ public class CodeExecutorImpl implements CodeExecutor {
         File errorFile = new File(workDir, errorFileName);
         File outputFile = new File(workDir, outputFileName);
 
-        FileInputStream fis = null;
-        String result = "";
-        try {
-            fis = new FileInputStream(outputFile);
-            result = Base64.getEncoder().encodeToString(DigestUtils.md5Digest(fis));
+        try(FileInputStream fis=new FileInputStream(outputFile);) {
+            String result= Base64.getEncoder().encodeToString(DigestUtils.md5Digest(fis));
+            errorFile.delete();
+            outputFile.delete();
+            return result;
         } catch (IOException e) {
             throw new FileHashFailedException(e.getMessage());
         }
-        errorFile.delete();
-        outputFile.delete();
-
-        return result;
     }
 
     private int executeProcess(ProcessBuilder processBuilder) throws IOException, InterruptedException {

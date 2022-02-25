@@ -1,6 +1,7 @@
 package ac.kr.kw.judge.problem.service;
 
 import ac.kr.kw.judge.problem.domain.Problem;
+import ac.kr.kw.judge.problem.domain.ProgrammingLanguage;
 import ac.kr.kw.judge.problem.domain.TestCase;
 import ac.kr.kw.judge.problem.dto.GradingResult;
 import ac.kr.kw.judge.problem.dto.Submit;
@@ -22,7 +23,6 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
     private final ProblemRepository problemRepository;
     private final CodeExecutor codeExecutor;
 
-
     @Transactional
     @Override
     public GradingResult gradeSolution(Long problemId, Submit submit) {
@@ -30,16 +30,18 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
                 .orElseThrow(() -> {
                     throw new IllegalArgumentException("해당 id의 problem이 존재하지 않습니다.");
                 });
+
         File rootDir = new File("//execute//" + UUID.randomUUID().toString());
         rootDir.mkdir();
 
-        makeSourceCodeFile(rootDir, submit);
-        if (!codeExecutor.compileCode(rootDir)) {
+        ProgrammingLanguage programmingLanguage = ProgrammingLanguage.valueOf(submit.getProgrammingLanguage());
+        makeSourceCodeFile(rootDir, submit, programmingLanguage);
+        if (!codeExecutor.compileCode(programmingLanguage, rootDir)) {
             return GradingResult.COMPILE_ERROR;
         }
 
         for (TestCase testCase : problem.getTestCases()) {
-            int exitValue = codeExecutor.executeCompiledCode(rootDir, new File(testCase.getInputFilePath()), problem.getLimit());
+            int exitValue = codeExecutor.executeCompiledCode(programmingLanguage, rootDir, new File(testCase.getInputFilePath()), problem.getLimit());
             if (exitValue == 1)
                 return GradingResult.RUNTIME_ERROR;
             else if (exitValue == 124)
@@ -50,8 +52,8 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
         return GradingResult.SUCCESS;
     }
 
-    private void makeSourceCodeFile(File workDir, Submit submit) {
-        File sourceCode = new File(workDir, "Main.java");
+    private void makeSourceCodeFile(File workDir, Submit submit, ProgrammingLanguage programmingLanguage) {
+        File sourceCode = new File(workDir, programmingLanguage.getFileName());
         try {
             sourceCode.createNewFile();
         } catch (IOException exception) {
