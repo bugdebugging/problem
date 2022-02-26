@@ -7,6 +7,7 @@ public class ProblemRegisterRequest {
     private String name;
     private Description description;
     private Limit limit;
+    private int score;
 
     public ProblemRegisterRequest() {
     }
@@ -21,5 +22,9 @@ public class ProblemRegisterRequest {
 
     public Limit getLimit() {
         return limit;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

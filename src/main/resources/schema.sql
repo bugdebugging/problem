@@ -10,6 +10,7 @@ create table problems
     memory             integer,
     time               integer,
     name               varchar(255),
+    score              integer,
     created_at         timestamp not null,
     updated_at         timestamp not null,
     primary key (id)
@@ -21,5 +22,5 @@ create table test_cases
     input_file_path  varchar(255),
     output_file_path varchar(255),
     output_hash      varchar(255),
-    foreign key (problem_id) references problems(id)
+    foreign key (problem_id) references problems (id)
 );

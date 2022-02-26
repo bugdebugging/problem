@@ -52,7 +52,8 @@ public class ProblemRegisterController {
         ProblemRegisterCommand problemRegisterCommand = new ProblemRegisterCommand(problemRegisterRequest.getName(),
                 problemRegisterRequest.getDescription(),
                 problemRegisterRequest.getLimit(),
-                testcases);
+                testcases,
+                problemRegisterRequest.getScore());
         return problemRegisterService.registerNewProblem(problemRegisterCommand);
     }
 

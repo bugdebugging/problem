@@ -19,7 +19,8 @@ public class ProblemRegisterServiceImpl implements ProblemRegisterService {
         Problem problem = new Problem(problemRegisterCommand.getName(),
                 problemRegisterCommand.getDescription(),
                 problemRegisterCommand.getLimit(),
-                problemRegisterCommand.getTestCase());
+                problemRegisterCommand.getTestCase(),
+                problemRegisterCommand.getScore());
         problemRepository.save(problem);
         return problem.getId();
     }

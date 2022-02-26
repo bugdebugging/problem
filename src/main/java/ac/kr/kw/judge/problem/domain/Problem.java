@@ -31,6 +31,9 @@ public class Problem {
     private List<TestCase> testCases = new ArrayList<>();
 
     @Column
+    private int score;
+
+    @Column
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -58,11 +61,12 @@ public class Problem {
     protected Problem() {
     }
 
-    public Problem(String name, Description description, Limit limit, List<TestCase> testCases) {
+    public Problem(String name, Description description, Limit limit, List<TestCase> testCases,int score) {
         this.name = name;
         this.description = description;
         this.limit = limit;
         this.testCases = testCases;
+        this.score=score;
         this.checkDuplicateTestCase();
     }
     private void checkDuplicateTestCase(){
@@ -97,6 +101,10 @@ public class Problem {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     @Override
