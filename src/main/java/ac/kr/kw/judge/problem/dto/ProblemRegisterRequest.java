@@ -9,6 +9,13 @@ public class ProblemRegisterRequest {
     private Limit limit;
     private int score;
 
+    public ProblemRegisterRequest(String name, Description description, Limit limit, int score) {
+        this.name = name;
+        this.description = description;
+        this.limit = limit;
+        this.score = score;
+    }
+
     public ProblemRegisterRequest() {
     }
 
