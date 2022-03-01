@@ -4,9 +4,9 @@ drop table if exists problems;
 create table problems
 (
     id                 bigint auto_increment,
-    description        varchar(255),
-    input_description  varchar(255),
-    output_description varchar(255),
+    description        varchar(2048),
+    input_description  varchar(1024),
+    output_description varchar(1024),
     memory             integer,
     time               integer,
     name               varchar(255),
