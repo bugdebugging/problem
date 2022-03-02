@@ -1,7 +1,8 @@
 package ac.kr.kw.judge.problem.domain;
 
+import ac.kr.kw.judge.problem.domain.exception.NotSupportedLanguageException;
+
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public enum ProgrammingLanguage {
     JAVA(new String[]{"javac", "Main.java"}, new String[]{"timeout", "1", "java", "-Djava.security.manager", "-cp", ".", "Main"}, "Main.java"), C(new String[]{"gcc", "-o", "Main", "Main.c"}, new String[]{"timeout", "1", "./Main"}, "Main.c"), CPP(new String[]{"g++", "-o", "Main", "Main.cpp"}, new String[]{"timeout", "1", "./Main"}, "Main.cpp");
@@ -27,9 +28,11 @@ public enum ProgrammingLanguage {
         return fileName;
     }
 
-    public boolean isSupportedLanguage(String language) {
-        return Arrays.stream(ProgrammingLanguage.values())
+    public static void checkLanguageIsSupported(String language) {
+        Arrays.stream(ProgrammingLanguage.values())
                 .filter(programmingLanguage -> language.equals(programmingLanguage))
-                .collect(Collectors.toList()).size() > 0;
+                .findFirst().orElseThrow(() -> {
+            throw new NotSupportedLanguageException(language + "는 지원 되는 언어가 아닙니다.");
+        });
     }
 }

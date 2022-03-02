@@ -26,6 +26,8 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
     @Transactional
     @Override
     public GradingResult gradeSolution(Long problemId, Submit submit) {
+        ProgrammingLanguage.checkLanguageIsSupported(submit.getProgrammingLanguage());
+
         Problem problem = problemRepository.findByIdWithTestCases(problemId)
                 .orElseThrow(() -> {
                     throw new IllegalArgumentException("해당 id의 problem이 존재하지 않습니다.");
