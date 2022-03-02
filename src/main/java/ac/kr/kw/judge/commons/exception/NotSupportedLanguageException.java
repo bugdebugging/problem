@@ -1,4 +1,4 @@
-package ac.kr.kw.judge.problem.domain.exception;
+package ac.kr.kw.judge.commons.exception;
 
 public class NotSupportedLanguageException extends RuntimeException{
     public NotSupportedLanguageException() {

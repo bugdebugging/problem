@@ -1,6 +1,6 @@
 package ac.kr.kw.judge.problem.domain;
 
-import ac.kr.kw.judge.problem.domain.exception.NotSupportedLanguageException;
+import ac.kr.kw.judge.commons.exception.NotSupportedLanguageException;
 
 import java.util.Arrays;
 

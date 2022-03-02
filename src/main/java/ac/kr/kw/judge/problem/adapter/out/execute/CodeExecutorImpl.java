@@ -1,8 +1,8 @@
 package ac.kr.kw.judge.problem.adapter.out.execute;
 
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.CompileErrorException;
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.ExecuteErrorException;
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
+import ac.kr.kw.judge.commons.exception.CompileErrorException;
+import ac.kr.kw.judge.commons.exception.ExecuteErrorException;
+import ac.kr.kw.judge.commons.exception.FileHashFailedException;
 import ac.kr.kw.judge.problem.domain.Limit;
 import ac.kr.kw.judge.problem.domain.ProgrammingLanguage;
 import ac.kr.kw.judge.problem.service.port.out.CodeExecutor;

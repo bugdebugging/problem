@@ -1,6 +1,6 @@
 package ac.kr.kw.judge.problem.adapter.out.event;
 
-import ac.kr.kw.judge.problem.adapter.out.event.exception.EventPublishFailedException;
+import ac.kr.kw.judge.commons.exception.EventPublishFailedException;
 import ac.kr.kw.judge.problem.dto.ProblemDto;
 import ac.kr.kw.judge.problem.service.port.out.ProblemChangeEventSender;
 import com.fasterxml.jackson.core.JsonProcessingException;

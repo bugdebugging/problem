@@ -1,8 +1,8 @@
 package ac.kr.kw.judge.commons.utils;
 
 import ac.kr.kw.judge.commons.exception.FileUploadFailedException;
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
-import ac.kr.kw.judge.problem.adapter.out.execute.exception.SourceCodeCreateException;
+import ac.kr.kw.judge.commons.exception.FileHashFailedException;
+import ac.kr.kw.judge.commons.exception.SourceCodeCreateException;
 import ac.kr.kw.judge.problem.domain.ProgrammingLanguage;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;

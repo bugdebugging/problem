@@ -1,4 +1,4 @@
-package ac.kr.kw.judge.problem.adapter.out.event.exception;
+package ac.kr.kw.judge.commons.exception;
 
 public class EventPublishFailedException extends RuntimeException{
     public EventPublishFailedException() {

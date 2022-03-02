@@ -1,4 +1,4 @@
-package ac.kr.kw.judge.problem.adapter.out.execute.exception;
+package ac.kr.kw.judge.commons.exception;
 
 public class FileHashFailedException extends RuntimeException{
     public FileHashFailedException() {
