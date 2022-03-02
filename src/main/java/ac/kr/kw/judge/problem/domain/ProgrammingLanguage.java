@@ -30,7 +30,7 @@ public enum ProgrammingLanguage {
 
     public static void checkLanguageIsSupported(String language) {
         Arrays.stream(ProgrammingLanguage.values())
-                .filter(programmingLanguage -> language.equals(programmingLanguage))
+                .filter(programmingLanguage -> language.equals(programmingLanguage.toString()))
                 .findFirst().orElseThrow(() -> {
             throw new NotSupportedLanguageException(language + "는 지원 되는 언어가 아닙니다.");
         });
