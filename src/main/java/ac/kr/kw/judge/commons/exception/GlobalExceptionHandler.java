@@ -5,6 +5,7 @@ import ac.kr.kw.judge.commons.apis.ApiUtils;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.CompileErrorException;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.ExecuteErrorException;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
+import ac.kr.kw.judge.problem.adapter.out.execute.exception.SourceCodeCreateException;
 import ac.kr.kw.judge.problem.domain.exception.NotSupportedLanguageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,8 @@ public class GlobalExceptionHandler {
             ExecuteErrorException.class,
             FileUploadFailedException.class,
             FileHashFailedException.class,
-            NullPointerException.class})
+            NullPointerException.class,
+            SourceCodeCreateException.class})
     public ResponseEntity<ApiResult> handleSystemException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiUtils.fail(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage()));

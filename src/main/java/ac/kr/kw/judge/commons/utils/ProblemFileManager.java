@@ -2,6 +2,8 @@ package ac.kr.kw.judge.commons.utils;
 
 import ac.kr.kw.judge.commons.exception.FileUploadFailedException;
 import ac.kr.kw.judge.problem.adapter.out.execute.exception.FileHashFailedException;
+import ac.kr.kw.judge.problem.adapter.out.execute.exception.SourceCodeCreateException;
+import ac.kr.kw.judge.problem.domain.ProgrammingLanguage;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +41,20 @@ public class ProblemFileManager {
                         throw new FileHashFailedException(e.getMessage());
                     }
                 }).collect(Collectors.toList());
+    }
+
+    public static String createSourceCodeFile(File rootDir, String sourceCode, ProgrammingLanguage programmingLanguage) {
+        File targetFile = new File(rootDir, programmingLanguage.getFileName());
+        createNewFile(targetFile);
+
+        try (FileOutputStream fos = new FileOutputStream(targetFile);
+             BufferedOutputStream bos = new BufferedOutputStream(fos);) {
+            bos.write(sourceCode.getBytes());
+            return targetFile.getPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new SourceCodeCreateException(e.getMessage());
+        }
     }
 
     private static void createNewFile(File file) {
