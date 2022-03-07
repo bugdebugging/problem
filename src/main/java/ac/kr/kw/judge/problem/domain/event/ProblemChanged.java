@@ -1,8 +1,8 @@
-package ac.kr.kw.judge.problem.dto;
+package ac.kr.kw.judge.problem.domain.event;
 
 import ac.kr.kw.judge.problem.domain.Problem;
 
-public class ProblemDto {
+public class ProblemChanged {
     private Long id;
     private String name;
     private String description;
@@ -10,7 +10,7 @@ public class ProblemDto {
     private String outputDescription;
     private int score;
 
-    public ProblemDto(Long id, String name, String description, String inputDescription, String outputDescription, int score) {
+    private ProblemChanged(Long id, String name, String description, String inputDescription, String outputDescription, int score) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -19,8 +19,8 @@ public class ProblemDto {
         this.score = score;
     }
 
-    public static ProblemDto fromEntity(Problem problem){
-        return new ProblemDto(problem.getId(),
+    public static ProblemChanged fromEntity(Problem problem) {
+        return new ProblemChanged(problem.getId(),
                 problem.getName(),
                 problem.getDescription().getDescription(),
                 problem.getDescription().getInputDescription(),

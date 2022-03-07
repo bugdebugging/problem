@@ -1,7 +1,7 @@
 package ac.kr.kw.judge.problem.service;
 
 import ac.kr.kw.judge.problem.domain.Problem;
-import ac.kr.kw.judge.problem.dto.ProblemDto;
+import ac.kr.kw.judge.problem.domain.event.ProblemChanged;
 import ac.kr.kw.judge.problem.repository.ProblemRepository;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
 import ac.kr.kw.judge.problem.service.port.in.ProblemRegisterService;
@@ -26,7 +26,7 @@ public class ProblemRegisterServiceImpl implements ProblemRegisterService {
                 problemRegisterCommand.getScore());
         problemRepository.save(problem);
 
-        eventSender.publish("problem", ProblemDto.fromEntity(problem));
+        eventSender.publish("problem", ProblemChanged.fromEntity(problem));
         return problem.getId();
     }
 }
