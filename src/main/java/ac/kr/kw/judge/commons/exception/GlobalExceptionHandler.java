@@ -13,8 +13,7 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler({IllegalStateException.class,
-            IllegalArgumentException.class,
-            NotSupportedLanguageException.class})
+            IllegalArgumentException.class,})
     public ResponseEntity<ApiResult> handleBusinessException(Exception e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiUtils.fail(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
