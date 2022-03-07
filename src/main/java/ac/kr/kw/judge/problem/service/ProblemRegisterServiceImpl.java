@@ -5,7 +5,7 @@ import ac.kr.kw.judge.problem.dto.ProblemDto;
 import ac.kr.kw.judge.problem.repository.ProblemRepository;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
 import ac.kr.kw.judge.problem.service.port.in.ProblemRegisterService;
-import ac.kr.kw.judge.problem.service.port.out.ProblemChangeEventSender;
+import ac.kr.kw.judge.problem.service.port.out.EventSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProblemRegisterServiceImpl implements ProblemRegisterService {
     private final ProblemRepository problemRepository;
-    private final ProblemChangeEventSender problemChangeEventSender;
+    private final EventSender eventSender;
 
     @Override
     public Long registerNewProblem(ProblemRegisterCommand problemRegisterCommand) {
@@ -25,7 +25,8 @@ public class ProblemRegisterServiceImpl implements ProblemRegisterService {
                 problemRegisterCommand.getTestCase(),
                 problemRegisterCommand.getScore());
         problemRepository.save(problem);
-        problemChangeEventSender.publish(ProblemDto.fromEntity(problem));
+
+        eventSender.publish("problem", ProblemDto.fromEntity(problem));
         return problem.getId();
     }
 }
