@@ -41,36 +41,39 @@ public class Problem {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public void changeInfo(Description description, Limit limit, String name) {
+    public void changeInfo(Description description, Limit limit, String name, int score) {
         this.description = description;
         this.limit = limit;
         this.name = name;
+        this.score = score;
     }
 
-    public void addTestCase(TestCase testCase){
+    public void addTestCase(TestCase testCase) {
         testCases.add(testCase);
         this.checkDuplicateTestCase();
     }
-    public void deleteTestCase(TestCase testCase){
-        testCases.stream().filter(tc ->tc.equals(testCase))
-                .findFirst().orElseThrow(()->{
-           throw new IllegalArgumentException("해당 test case의 문제가 존재하지 않습니다.");
+
+    public void deleteTestCase(TestCase testCase) {
+        testCases.stream().filter(tc -> tc.equals(testCase))
+                .findFirst().orElseThrow(() -> {
+            throw new IllegalArgumentException("해당 test case의 문제가 존재하지 않습니다.");
         });
     }
 
     protected Problem() {
     }
 
-    public Problem(String name, Description description, Limit limit, List<TestCase> testCases,int score) {
+    public Problem(String name, Description description, Limit limit, List<TestCase> testCases, int score) {
         this.name = name;
         this.description = description;
         this.limit = limit;
         this.testCases = testCases;
-        this.score=score;
+        this.score = score;
         this.checkDuplicateTestCase();
     }
-    private void checkDuplicateTestCase(){
-        if(this.testCases.stream().distinct().collect(Collectors.toList()).size()!=testCases.size()){
+
+    private void checkDuplicateTestCase() {
+        if (this.testCases.stream().distinct().collect(Collectors.toList()).size() != testCases.size()) {
             throw new IllegalArgumentException("중복된 tc를 여러번 올릴 수 없습니다.");
         }
     }
