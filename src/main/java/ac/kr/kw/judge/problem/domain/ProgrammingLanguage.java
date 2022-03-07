@@ -1,7 +1,5 @@
 package ac.kr.kw.judge.problem.domain;
 
-import ac.kr.kw.judge.commons.exception.NotSupportedLanguageException;
-
 import java.util.Arrays;
 
 public enum ProgrammingLanguage {
@@ -32,7 +30,7 @@ public enum ProgrammingLanguage {
         Arrays.stream(ProgrammingLanguage.values())
                 .filter(programmingLanguage -> language.equals(programmingLanguage.toString()))
                 .findFirst().orElseThrow(() -> {
-            throw new NotSupportedLanguageException(language + "는 지원 되는 언어가 아닙니다.");
+            throw new IllegalArgumentException(language + "는 지원 되는 언어가 아닙니다.");
         });
     }
 }
