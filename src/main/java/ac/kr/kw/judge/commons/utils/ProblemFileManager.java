@@ -11,9 +11,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ProblemFileManager {
+    public static final String executeWorkRootDir="//execute//";
+
     public static List<File> saveToLocalRootDir(File rootDir, List<MultipartFile> files) {
         List<File> result = new ArrayList<>();
         for (MultipartFile file : files) {
@@ -55,6 +58,12 @@ public class ProblemFileManager {
             e.printStackTrace();
             throw new SourceCodeCreateException(e.getMessage());
         }
+    }
+
+    public static File createExecuteDir(){
+        File rootDir=new File(executeWorkRootDir+ UUID.randomUUID().toString());
+        rootDir.mkdir();
+        return rootDir;
     }
 
     private static void createNewFile(File file) {
