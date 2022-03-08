@@ -1,6 +1,5 @@
 package ac.kr.kw.judge.problem.adapter.out.event;
 
-import ac.kr.kw.judge.commons.exception.EventPublishFailedException;
 import ac.kr.kw.judge.problem.service.port.out.EventSender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +19,6 @@ public class EventSenderImpl implements EventSender {
             kafkaTemplate.send(topic, objectMapper.writeValueAsString(data));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new EventPublishFailedException(e.getMessage());
         }
     }
 
@@ -30,7 +28,6 @@ public class EventSenderImpl implements EventSender {
             kafkaTemplate.send(topic, key, objectMapper.writeValueAsString(data));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new EventPublishFailedException(e.getMessage());
         }
     }
 }

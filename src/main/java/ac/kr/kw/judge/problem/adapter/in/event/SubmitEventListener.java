@@ -1,6 +1,5 @@
 package ac.kr.kw.judge.problem.adapter.in.event;
 
-import ac.kr.kw.judge.commons.exception.EventConsumeFailedException;
 import ac.kr.kw.judge.problem.domain.event.ChallengeSubmitted;
 import ac.kr.kw.judge.problem.service.port.in.SolutionGradingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +21,6 @@ public class SubmitEventListener {
             solutionGradingService.gradeChallengeSubmit(challengeSubmitted.getProblemId(), challengeSubmitted);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
-            throw new EventConsumeFailedException(e.getMessage());
         }
     }
 }
