@@ -2,7 +2,6 @@ package ac.kr.kw.judge.problem.adapter.in.event;
 
 import ac.kr.kw.judge.commons.exception.EventConsumeFailedException;
 import ac.kr.kw.judge.problem.domain.event.ChallengeSubmitted;
-import ac.kr.kw.judge.problem.dto.Submit;
 import ac.kr.kw.judge.problem.service.port.in.SolutionGradingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
