@@ -26,11 +26,16 @@ public enum ProgrammingLanguage {
         return fileName;
     }
 
-    public static void checkLanguageIsSupported(String language) {
+    private static void checkLanguageIsSupported(String language) {
         Arrays.stream(ProgrammingLanguage.values())
                 .filter(programmingLanguage -> language.equals(programmingLanguage.toString()))
                 .findFirst().orElseThrow(() -> {
             throw new IllegalArgumentException(language + "는 지원 되는 언어가 아닙니다.");
         });
+    }
+
+    public static ProgrammingLanguage ofSupportedLanguage(String language) {
+        checkLanguageIsSupported(language);
+        return ProgrammingLanguage.valueOf(language);
     }
 }
