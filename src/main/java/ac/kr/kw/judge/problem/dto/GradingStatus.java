@@ -1,11 +1,11 @@
 package ac.kr.kw.judge.problem.dto;
 
-public enum GradingResult {
+public enum GradingStatus {
     SUCCESS("SUCCESS"),FAILED("FAILED"),COMPILE_ERROR("COMPILE_ERROR")
     , TIME_LIMIT("TIME_LIMIT"),RUNTIME_ERROR("RUNTIME_ERROR");
     private String value;
 
-    GradingResult(String value) {
+    GradingStatus(String value) {
         this.value = value;
     }
 
