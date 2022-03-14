@@ -30,7 +30,7 @@ services:
 
   problem_catalog:
     container_name: 'problem-catalog'
-    image: 'isvara/problem-catalog:latest'
+    image: 'isvara/problem-catalog:1.0'
     networks:
       - app-tier
     ports:
@@ -44,11 +44,23 @@ services:
 
   problem:
     container_name: 'problem'
-    image: 'isvara/problem:latest'
+    image: 'isvara/problem:1.0'
     networks:
       - app-tier
     ports:
       - "8080:8080"
+    depends_on:
+      - kafka
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+
+  challenge:
+    container_name: 'challenge'
+    image: 'isvara/challenge:1.0'
+    networks:
+      - app-tier
+    ports:
+      - "8082:8082"
     depends_on:
       - kafka
     environment:
