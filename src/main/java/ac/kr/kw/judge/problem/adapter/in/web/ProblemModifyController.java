@@ -2,6 +2,7 @@ package ac.kr.kw.judge.problem.adapter.in.web;
 
 import ac.kr.kw.judge.commons.apis.ApiResult;
 import ac.kr.kw.judge.commons.apis.ApiUtils;
+import ac.kr.kw.judge.commons.auth.AuthorizedUser;
 import ac.kr.kw.judge.problem.dto.ProblemModifyRequest;
 import ac.kr.kw.judge.problem.service.command.ProblemModifyCommand;
 import ac.kr.kw.judge.problem.service.port.in.ProblemModifyService;
@@ -17,13 +18,15 @@ public class ProblemModifyController {
     private final ProblemModifyService problemModifyService;
 
     @PutMapping("/api/problems/{problemId}")
-    public ApiResult modifyProblemInfo(@PathVariable("problemId") Long problemId, @RequestBody ProblemModifyRequest problemModifyRequest) {
+    public ApiResult modifyProblemInfo(@PathVariable("problemId") Long problemId,
+                                       @RequestBody ProblemModifyRequest problemModifyRequest,
+                                       @AuthorizedUser String username) {
         ProblemModifyCommand problemModifyCommand = new ProblemModifyCommand(problemId
                 , problemModifyRequest.getDescription()
                 , problemModifyRequest.getLimit()
                 , problemModifyRequest.getName()
                 , problemModifyRequest.getScore());
-        problemModifyService.modifyProblemInfo(problemModifyCommand);
+        problemModifyService.modifyProblemInfo(username, problemModifyCommand);
         return ApiUtils.success("successfully modify problem info");
     }
 }
