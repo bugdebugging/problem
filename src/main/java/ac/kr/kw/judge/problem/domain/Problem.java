@@ -34,6 +34,9 @@ public class Problem {
     private int score;
 
     @Column
+    private String author;
+
+    @Column
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -63,12 +66,13 @@ public class Problem {
     protected Problem() {
     }
 
-    public Problem(String name, Description description, Limit limit, List<TestCase> testCases, int score) {
+    public Problem(String name, Description description, Limit limit, List<TestCase> testCases, int score, String author) {
         this.name = name;
         this.description = description;
         this.limit = limit;
         this.testCases = testCases;
         this.score = score;
+        this.author = author;
         this.checkDuplicateTestCase();
     }
 
@@ -98,16 +102,20 @@ public class Problem {
         return testCases;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     @Override

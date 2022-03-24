@@ -2,6 +2,7 @@ package ac.kr.kw.judge.problem.adapter.in.web;
 
 import ac.kr.kw.judge.commons.apis.ApiResult;
 import ac.kr.kw.judge.commons.apis.ApiUtils;
+import ac.kr.kw.judge.commons.auth.AuthorizedUser;
 import ac.kr.kw.judge.commons.utils.ProblemFileManager;
 import ac.kr.kw.judge.problem.domain.Description;
 import ac.kr.kw.judge.problem.domain.Limit;
@@ -38,7 +39,8 @@ public class ProblemRegisterController {
             @RequestParam("output_description") String outputDescription,
             int time, int memory, int score,
             @RequestPart(value = "inputs") List<MultipartFile> inputFiles,
-            @RequestPart(value = "outputs") List<MultipartFile> outputFiles) {
+            @RequestPart(value = "outputs") List<MultipartFile> outputFiles,
+            @AuthorizedUser String username) {
         checkArgument(inputFiles.size() == outputFiles.size(), "업로드할 input과 output파일의 수는 동일해야합니다.");
 
         File rootDir = new File("//problems//" + UUID.randomUUID().toString());
@@ -47,11 +49,11 @@ public class ProblemRegisterController {
         List<File> savedOutputFiles = ProblemFileManager.saveToLocalRootDir(rootDir, outputFiles);
         List<String> outputHashes = ProblemFileManager.convertFilesToHashes(savedOutputFiles);
 
-    ProblemRegisterCommand problemRegisterCommand = new ProblemRegisterCommand(name
-            , Description.of(description, inputDescription, outputDescription)
-            , Limit.of(memory, time), createTestCases(savedInputFiles, savedOutputFiles, outputHashes), score);
-        return ApiUtils.success(problemRegisterService.registerNewProblem(problemRegisterCommand));
-}
+        ProblemRegisterCommand problemRegisterCommand = new ProblemRegisterCommand(name
+                , Description.of(description, inputDescription, outputDescription)
+                , Limit.of(memory, time), createTestCases(savedInputFiles, savedOutputFiles, outputHashes), score);
+        return ApiUtils.success(problemRegisterService.registerNewProblem(username, problemRegisterCommand));
+    }
 
     private List<TestCase> createTestCases(List<File> inputFiles, List<File> outputFiles, List<String> outputFileHashes) {
         List<TestCase> result = new ArrayList<>();

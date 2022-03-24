@@ -11,6 +11,7 @@ create table problems
     time               integer,
     name               varchar(255),
     score              integer,
+    author             varchar(64),
     created_at         timestamp not null,
     updated_at         timestamp not null,
     primary key (id)

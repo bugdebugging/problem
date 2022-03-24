@@ -18,12 +18,13 @@ public class ProblemRegisterServiceImpl implements ProblemRegisterService {
     private final EventSender eventSender;
 
     @Override
-    public Long registerNewProblem(ProblemRegisterCommand problemRegisterCommand) {
+    public Long registerNewProblem(String username, ProblemRegisterCommand problemRegisterCommand) {
         Problem problem = new Problem(problemRegisterCommand.getName(),
                 problemRegisterCommand.getDescription(),
                 problemRegisterCommand.getLimit(),
                 problemRegisterCommand.getTestCase(),
-                problemRegisterCommand.getScore());
+                problemRegisterCommand.getScore()
+                , username);
         problemRepository.save(problem);
 
         eventSender.publish("problem", ProblemChanged.fromEntity(problem));
