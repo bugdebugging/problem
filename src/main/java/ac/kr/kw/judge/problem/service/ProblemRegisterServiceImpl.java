@@ -1,7 +1,6 @@
 package ac.kr.kw.judge.problem.service;
 
 import ac.kr.kw.judge.problem.domain.Problem;
-import ac.kr.kw.judge.problem.domain.event.ProblemChanged;
 import ac.kr.kw.judge.problem.domain.event.ProblemCreated;
 import ac.kr.kw.judge.problem.repository.ProblemRepository;
 import ac.kr.kw.judge.problem.service.command.ProblemRegisterCommand;
