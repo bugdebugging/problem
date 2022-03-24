@@ -28,6 +28,6 @@ public class ProblemModifyServiceImpl implements ProblemModifyService {
                 , problemModifyCommand.getName()
                 , problemModifyCommand.getScore());
 
-        eventSender.publish("problem", ProblemChanged.fromEntity(problem));
+        eventSender.publish("problem_changed", ProblemChanged.fromEntity(problem));
     }
 }
