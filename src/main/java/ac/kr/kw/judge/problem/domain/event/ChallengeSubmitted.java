@@ -2,7 +2,8 @@ package ac.kr.kw.judge.problem.domain.event;
 
 public class ChallengeSubmitted {
     private Long problemId;
-    private Long participationId;
+    private String username;
+    private Long challengeId;
     private Long submitId;
     private String programmingLanguage;
     private String sourceCode;
@@ -14,8 +15,12 @@ public class ChallengeSubmitted {
         return problemId;
     }
 
-    public Long getParticipationId() {
-        return participationId;
+    public String getUsername() {
+        return username;
+    }
+
+    public Long getChallengeId() {
+        return challengeId;
     }
 
     public Long getSubmitId() {

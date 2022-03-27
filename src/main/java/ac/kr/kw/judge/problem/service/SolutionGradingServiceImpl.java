@@ -57,10 +57,10 @@ public class SolutionGradingServiceImpl implements SolutionGradingService {
         ChallengeSubmitGraded challengeSubmitGraded = null;
         if (!codeExecutor.compileCode(ProgrammingLanguage.ofSupportedLanguage(submit.getProgrammingLanguage()), rootDir)) {
             GradingResult compileErrorResult = GradingResult.of(GradingStatus.COMPILE_ERROR, 0);
-            challengeSubmitGraded = ChallengeSubmitGraded.of(compileErrorResult, submit.getParticipationId(), submit.getSubmitId());
+            challengeSubmitGraded = ChallengeSubmitGraded.of(compileErrorResult, submit.getUsername(), submit.getChallengeId(), submit.getSubmitId());
         } else {
             GradingResult result = gradeProblemTestCases(problem, ProgrammingLanguage.ofSupportedLanguage(submit.getProgrammingLanguage()), rootDir);
-            challengeSubmitGraded = ChallengeSubmitGraded.of(result, submit.getParticipationId(), submit.getSubmitId());
+            challengeSubmitGraded = ChallengeSubmitGraded.of(result, submit.getUsername(), submit.getChallengeId(), submit.getSubmitId());
         }
         eventSender.publish("grade", challengeSubmitGraded);
     }

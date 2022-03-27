@@ -2,25 +2,31 @@ package ac.kr.kw.judge.problem.domain.event;
 
 public class ChallengeSubmitGraded {
     private GradingResult result;
-    private Long participationId;
+    private String username;
+    private Long challengeId;
     private Long submitId;
 
-    private ChallengeSubmitGraded(GradingResult result, Long participationId, Long submitId) {
+    private ChallengeSubmitGraded(GradingResult result, String username, Long challengeId, Long submitId) {
         this.result = result;
-        this.participationId = participationId;
+        this.username = username;
+        this.challengeId = challengeId;
         this.submitId = submitId;
     }
 
-    public static ChallengeSubmitGraded of(GradingResult result, Long participationId, Long submitId) {
-        return new ChallengeSubmitGraded(result, participationId, submitId);
+    public static ChallengeSubmitGraded of(GradingResult result, String username, Long challengeId, Long submitId) {
+        return new ChallengeSubmitGraded(result, username, challengeId, submitId);
     }
 
     public GradingResult getResult() {
         return result;
     }
 
-    public Long getParticipationId() {
-        return participationId;
+    public String getUsername() {
+        return username;
+    }
+
+    public Long getChallengeId() {
+        return challengeId;
     }
 
     public Long getSubmitId() {
